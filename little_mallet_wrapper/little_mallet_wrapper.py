@@ -137,17 +137,18 @@ def train_topic_model(path_to_mallet,
                       **kwargs
                       ):
 
-    cmd =   [path_to_mallet,                'train-topics',
-            '--input',                      path_to_formatted_training_data,
-            '--num-topics',                 str(num_topics),
-            '--inferencer-filename',        path_to_model,
-            '--output-topic-keys',          path_to_topic_keys,
-            '--output-doc-topics',          path_to_topic_distributions,
-            '--topic-word-weights-file',    path_to_topic_distributions,
-            '--diagnostics-file',           path_to_diagnostics]
+    cmd = str(path_to_mallet + ' train-topics --input "' + path_to_formatted_training_data + '"' \
+                             + ' --num-topics ' + str(num_topics) \
+                             + ' --inferencer-filename "' + path_to_model + '"' \
+                             + ' --output-topic-keys "' + path_to_topic_keys + '"' \
+                             + ' --output-doc-topics "' + path_to_topic_distributions + '"' \
+                             + ' --topic-word-weights-file "' + path_to_word_weights + '"' \
+                             + ' --diagnostics-file "' + path_to_diagnostics + '"' \
+                             )
+
 
     for key, value in kwargs.items():
-        cmd.extend([f"--{key.replace('_', '-')}", str(value)])
+        cmd = cmd + str([f"--{key.replace('_', '-')}", str(value)])
 
     print('Training topic model...')
     os.system(cmd)
