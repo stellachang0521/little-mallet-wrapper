@@ -150,6 +150,7 @@ def train_topic_model(path_to_mallet,
     for key, value in kwargs.items():
         cmd = cmd + str([f"--{key.replace('_', '-')}", str(value)])
 
+    print(cmd)
     print('Training topic model...')
     os.system(cmd)
 
